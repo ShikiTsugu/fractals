@@ -16,6 +16,7 @@ public class buildFractals {
 
     }
 
+    //création du fichier Fractal.png (ou Fractalx.png avec x un nombre si le fichier existe déjà)
     public void buildPicture() {
         var img = new BufferedImage(210, 210, BufferedImage.TYPE_INT_RGB);
         int id = 1;

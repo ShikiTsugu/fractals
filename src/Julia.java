@@ -25,6 +25,7 @@ public class Julia {
         return z0;
     }
 
+    //Création d'un polynôme complexe en demandant à l'utilisateur son degré et la valeur de la constante
     public double[] buildPolynom(){
         Scanner sc = new Scanner(System.in).useLocale(Locale.US);
         System.out.println("Enter degre of polynom (format : x) :");
@@ -36,6 +37,7 @@ public class Julia {
         return new double[]{degre, r, i};
     }
 
+    //calcule le terme suivant de la suite complexe
     public Complexe nextTerm(Complexe z){
         Complexe base = z;
         int exponent = (int)polynom[0];
@@ -45,16 +47,17 @@ public class Julia {
             res = res.multiplication(base);
             --exponent;
         }
-        return res;
+        return res.somme(c);
     }
 
+    //cherche à partir de combien d'itération la suite diverge
     int divergenceIndex(Complexe z0){
         int max_i = 1000;
         int rad = 2;
         int i = 0;
         Complexe zn = z0;
         while(i < max_i-1 && zn.module() <= rad){
-            zn = nextTerm(zn).somme(c);
+            zn = nextTerm(zn);
             i++;
         }
         return i;
