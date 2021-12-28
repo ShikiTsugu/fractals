@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class buildFractals {
     private final Julia julia;
@@ -41,12 +42,19 @@ public class buildFractals {
         return i;
     }
 
+    //Coloriage des pixels selon l'indice de divergence
     public void color(BufferedImage img){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Choose a Red value from 0 to 255 : ");
+        int red = sc.nextInt();
+        System.out.println("Choose a Green value from 0 to 255 : ");
+        int green = sc.nextInt();
+        System.out.println("Choose a Blue value from 0 to 255 : ");
+        int blue = sc.nextInt();
         for(int y = 0; y<img.getHeight(); y++){
             for(int x = 0; x<img.getWidth(); x++){
                 int ind = divergenceIndex(new Complexe((x-img.getWidth()/2f)/200, (y-img.getHeight()/2f)/200));
-                System.out.println(ind);
-                color = new Color((111*ind)/max_i,0,(255*ind)/max_i);
+                color = new Color((red*ind)/max_i,(green*ind)/max_i,(blue*ind)/max_i);
                 img.setRGB(x, y, color.getRGB());
             }
         }
