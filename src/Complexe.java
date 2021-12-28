@@ -17,25 +17,17 @@ public class Complexe {
     }
 
     public Complexe somme(Complexe c){
-        double resR = this.reel+c.reel;
-        double resI = this.imaginaire+c.imaginaire;
-        return new Complexe(resR,resI);
+        return new Complexe(this.reel+c.reel, this.imaginaire+c.imaginaire);
     }
 
     public Complexe soustraction(Complexe c){
-        double resR = this.reel-c.reel;
-        double resI = this.imaginaire-c.imaginaire;
-        return new Complexe(resR,resI);
+        return new Complexe(this.reel-c.reel, this.imaginaire-c.imaginaire);
     }
 
     public Complexe multiplication(Complexe c){
-        double resR1 = this.reel*c.reel;
-        double resI1 = this.reel*c.imaginaire;
-        double resR2 = this.imaginaire*c.imaginaire;
-        double resI2 = this.imaginaire*c.reel;
-        double resRF = resR1+resR2;
-        double resIF = resI1+resI2;
-        return new Complexe(resRF,resIF);
+        double reel = (this.reel * c.reel) - (this.imaginaire * c.imaginaire);
+        double img = (this.reel * c.imaginaire) + (this.imaginaire * c.reel);
+        return new Complexe(reel,img);
     }
 
     public Complexe division(Complexe c){
@@ -61,7 +53,7 @@ public class Complexe {
 
     public Complexe conjugue(){
         double newIm = -imaginaire;
-        return new Complexe(reel,newIm);
+        return new Complexe(reel, -imaginaire);
     }
 
     public double module(){
