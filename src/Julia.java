@@ -1,5 +1,6 @@
 package src;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Julia {
@@ -25,12 +26,12 @@ public class Julia {
     }
 
     public double[] buildPolynom(){
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in).useLocale(Locale.US);
         System.out.println("Enter degre of polynom (format : x) :");
         int degre = sc.nextInt();
-        System.out.println("Enter the real part of the constant (format : x,x or x) :");
+        System.out.println("Enter the real part of the constant (format : x.x or x) :");
         double r = sc.nextDouble();
-        System.out.println("Enter the imaginary part of the constant (without the i, just the value, format : x,x or x) :");
+        System.out.println("Enter the imaginary part of the constant (without the i, just the value, format : x.x or x) :");
         double i = sc.nextDouble();
         return new double[]{degre, r, i};
     }
