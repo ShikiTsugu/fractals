@@ -64,7 +64,7 @@ public class buildFractals {
             for(int x = 0; x<img.getWidth(); x++){
                 float adjust = 2f;
                 if(set instanceof Mandelbrot){
-                    adjust = 1.5f;
+                    adjust = 1.35f;
                 }
                 int ind = divergenceIndex(new Complexe((x-img.getWidth()/adjust)/200, (y-img.getHeight()/2f)/200));
                 rgb = Color.HSBtoRGB(Float.parseFloat(hue+"f"), 1f, ind*25f/max_i);
