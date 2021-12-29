@@ -45,7 +45,6 @@ public class buildFractals {
             ((Mandelbrot) set).setC(z0);
             zn = set.getC();
         }
-        System.out.println(zn);
         for(int i = 0; i<max_i; i++){
             if(zn.module()>rad){
                 return i;
@@ -68,7 +67,6 @@ public class buildFractals {
                     adjust = 1.5f;
                 }
                 int ind = divergenceIndex(new Complexe((x-img.getWidth()/adjust)/200, (y-img.getHeight()/2f)/200));
-                System.out.println(ind);
                 rgb = Color.HSBtoRGB(Float.parseFloat(hue+"f"), 1f, ind*25f/max_i);
                 if(ind == max_i){
                     rgb = 0;
