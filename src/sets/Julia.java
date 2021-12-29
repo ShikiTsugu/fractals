@@ -1,13 +1,16 @@
-package src;
+package src.sets;
+
+import src.builders.Complexe;
 
 import java.util.Locale;
 import java.util.Scanner;
 
-public class Julia {
+public class Julia extends fractalSet{
     private final double[] polynom;
     private final Complexe c;
 
     public Julia(){
+        super();
         polynom = buildPolynom();
         this.c = new Complexe(polynom[1],polynom[2]);
     }

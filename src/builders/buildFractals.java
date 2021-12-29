@@ -1,36 +1,40 @@
-package src;
+package src.builders;
+
+import src.sets.fractalSet;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Scanner;
 
 public class buildFractals {
-    private final Julia julia;
+    private final fractalSet set;
     private int max_i = 1000;
     private int rad = 2;
     private int rgb;
 
-    public buildFractals(Julia j){
-        julia = j;
+    public buildFractals(fractalSet f){
+        set = f;
     }
 
     //calcule le terme suivant de la suite complexe
     public Complexe nextTerm(Complexe z){
         Complexe base = z;
         int i = 0;
-        int exponent = (int)julia.getPolynom()[0];
+        int exponent = (int)set.getPolynom()[0];
         Complexe res = z;
-
+        if(exponent==0){
+            res = new Complexe(1,1);
+            return res.somme(set.getC());
+        }
         while (i != exponent-1) {
             res = res.multiplication(base);
             i++;
         }
-        return res.somme(julia.getC());
+        return res.somme(set.getC());
     }
 
     //cherche à partir de combien d'itération la suite diverge
@@ -71,7 +75,7 @@ public class buildFractals {
         g2d.drawImage(img, 0, 0, w, h, null);
         g2d.setPaint(Color.white);
         g2d.setFont(new Font("Serif", Font.BOLD, 20));
-        String func = julia.toString();
+        String func = set.toString();
         FontMetrics fm = g2d.getFontMetrics();
         int x = 10;
         int y = fm.getHeight();
