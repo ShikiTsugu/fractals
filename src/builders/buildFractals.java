@@ -1,5 +1,6 @@
 package src.builders;
 
+import src.sets.Mandelbrot;
 import src.sets.fractalSet;
 
 import javax.imageio.ImageIO;
@@ -40,6 +41,11 @@ public class buildFractals {
     //cherche à partir de combien d'itération la suite diverge
     int divergenceIndex(Complexe z0){
         Complexe zn = z0;
+        if(set instanceof Mandelbrot){
+            ((Mandelbrot) set).setC(z0);
+            zn = set.getC();
+        }
+        System.out.println(zn);
         for(int i = 0; i<max_i; i++){
             if(zn.module()>rad){
                 return i;
@@ -57,7 +63,12 @@ public class buildFractals {
 
         for(int y = 0; y<img.getHeight(); y++){
             for(int x = 0; x<img.getWidth(); x++){
-                int ind = divergenceIndex(new Complexe((x-img.getWidth()/2f)/200, (y-img.getHeight()/2f)/200));
+                float adjust = 2f;
+                if(set instanceof Mandelbrot){
+                    adjust = 1.5f;
+                }
+                int ind = divergenceIndex(new Complexe((x-img.getWidth()/adjust)/200, (y-img.getHeight()/2f)/200));
+                System.out.println(ind);
                 rgb = Color.HSBtoRGB(Float.parseFloat(hue+"f"), 1f, ind*25f/max_i);
                 if(ind == max_i){
                     rgb = 0;
