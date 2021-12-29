@@ -33,6 +33,6 @@ public class Julia {
     }
 
     public String toString(){
-        return "|f(z) = z^" + (int)polynom[0] + " + c" + "\n|c = "+c;
+        return "f(z) = z^" + (int)polynom[0] + " + c" + "  with  c = "+c;
     }
 }
