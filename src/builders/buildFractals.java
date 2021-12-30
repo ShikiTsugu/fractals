@@ -17,6 +17,7 @@ public class buildFractals {
     private int rad = 2;
     private int rgb;
     private int scale;
+    private float hue;
 
     public buildFractals(fractalSet f){
         set = f;
@@ -57,10 +58,6 @@ public class buildFractals {
 
     //Coloriage des pixels selon l'indice de divergence
     public void color(BufferedImage img){
-        Scanner sc = new Scanner(System.in).useLocale(Locale.US);
-        System.out.println("Choose a Hue value from 0.0 to 1.0 : ");
-        float hue = sc.nextFloat();
-
         for(int y = 0; y<img.getHeight(); y++){
             for(int x = 0; x<img.getWidth(); x++){
                 float adjust = 2f;
@@ -92,11 +89,17 @@ public class buildFractals {
         g2d.drawString(func, x, y);
     }
 
-    //création du fichier Fractal.png (ou Fractalx.png avec x un nombre si le fichier existe déjà)
-    public void buildPicture() {
-        Scanner sc = new Scanner(System.in);
+    //Demande à l'utilisateur les valeurs pour la taille et la teinte
+    public void requestSettings(){
+        Scanner sc = new Scanner(System.in).useLocale(Locale.US);
         System.out.println("How big do you want the fractal to be ? Enter a value (200 minimum, for better render) :");
         scale = sc.nextInt();
+        System.out.println("Choose a Hue value from 0.0 to 1.0 : ");
+        hue = sc.nextFloat();
+    }
+
+    //création du fichier Fractal.png (ou Fractalx.png avec x un nombre si le fichier existe déjà)
+    public void buildPicture() {
         var img = new BufferedImage(3*scale, 3*scale, BufferedImage.TYPE_INT_RGB);
         color(img);
         displayFunction(img);
