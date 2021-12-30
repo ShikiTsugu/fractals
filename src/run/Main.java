@@ -23,6 +23,7 @@ public class Main {
         }
         System.out.println(set);
         buildFractals f = new buildFractals(set);
+        f.requestSettings();
         f.buildPicture();
     }
 }
