@@ -98,11 +98,18 @@ public class buildFractals {
         hue = sc.nextFloat();
     }
 
-    //création du fichier Fractal.png (ou Fractalx.png avec x un nombre si le fichier existe déjà)
-    public void buildPicture() {
+    //Génère une image de fractale avec la couleur, la taille et la fonction souhaité
+    public BufferedImage buildPicture() {
         var img = new BufferedImage(3*scale, 3*scale, BufferedImage.TYPE_INT_RGB);
         color(img);
         displayFunction(img);
+        return img;
+    }
+
+    //création du fichier Fractal.png (ou Fractalx.png avec x un nombre si le fichier existe déjà)
+    public void generateFile(){
+        requestSettings();
+        BufferedImage img = buildPicture();
         int id = 0;
         File f = new File("Fractal.png");
         while (f.exists()) {
