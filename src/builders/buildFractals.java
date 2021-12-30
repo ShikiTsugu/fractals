@@ -16,6 +16,7 @@ public class buildFractals {
     private int max_i = 1000;
     private int rad = 2;
     private int rgb;
+    private int scale;
 
     public buildFractals(fractalSet f){
         set = f;
@@ -66,7 +67,7 @@ public class buildFractals {
                 if(set instanceof Mandelbrot){
                     adjust = 1.35f;
                 }
-                int ind = divergenceIndex(new Complexe((x-img.getWidth()/adjust)/200, (y-img.getHeight()/2f)/200));
+                int ind = divergenceIndex(new Complexe((x-img.getWidth()/adjust)/scale, (y-img.getHeight()/2f)/scale));
                 rgb = Color.HSBtoRGB(Float.parseFloat(hue+"f"), 1f, ind*25f/max_i);
                 if(ind == max_i){
                     rgb = 0;
@@ -83,7 +84,7 @@ public class buildFractals {
         Graphics2D g2d = img.createGraphics();
         g2d.drawImage(img, 0, 0, w, h, null);
         g2d.setPaint(Color.white);
-        g2d.setFont(new Font("Serif", Font.BOLD, 20));
+        g2d.setFont(new Font("Serif", Font.BOLD, scale/10));
         String func = set.toString();
         FontMetrics fm = g2d.getFontMetrics();
         int x = 10;
@@ -93,7 +94,10 @@ public class buildFractals {
 
     //création du fichier Fractal.png (ou Fractalx.png avec x un nombre si le fichier existe déjà)
     public void buildPicture() {
-        var img = new BufferedImage(600, 600, BufferedImage.TYPE_INT_RGB);
+        Scanner sc = new Scanner(System.in);
+        System.out.println("How big do you want the fractal to be ? Enter a value (200 minimum, for better render) :");
+        scale = sc.nextInt();
+        var img = new BufferedImage(3*scale, 3*scale, BufferedImage.TYPE_INT_RGB);
         color(img);
         displayFunction(img);
         int id = 1;
