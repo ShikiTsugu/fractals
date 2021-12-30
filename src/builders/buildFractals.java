@@ -103,14 +103,11 @@ public class buildFractals {
         var img = new BufferedImage(3*scale, 3*scale, BufferedImage.TYPE_INT_RGB);
         color(img);
         displayFunction(img);
-        int id = 1;
+        int id = 0;
         File f = new File("Fractal.png");
-        if (f.exists()) {
+        while (f.exists()) {
+            id++;
             f = new File("Fractal" + id + ".png");
-            while (f.exists()) {
-                id++;
-                f = new File("Fractal" + id + ".png");
-            }
         }
         try {
             ImageIO.write(img, "PNG", f);
