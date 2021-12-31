@@ -1,5 +1,8 @@
 package src.builders;
 
+import src.functions.Function;
+import src.functions.Polynom;
+import src.functions.Trigonometry;
 import src.sets.Mandelbrot;
 import src.sets.fractalSet;
 
@@ -25,17 +28,14 @@ public class buildFractals {
 
     //calcule le terme suivant de la suite complexe
     public Complexe nextTerm(Complexe z){
-        Complexe base = z;
-        int i = 0;
-        int exponent = (int)set.getPolynom()[0];
         Complexe res = z;
-        if(exponent==0){
-            res = new Complexe(1,1);
-            return res.somme(set.getC());
+        Function type = set.getType();
+        if (type instanceof Polynom){
+            res = type.calculate(z);
         }
-        while (i != exponent-1) {
-            res = res.multiplication(base);
-            i++;
+        if (type instanceof Trigonometry){
+            res = type.calculate(z);
+            return set.getC().multiplication(res);
         }
         return res.somme(set.getC());
     }

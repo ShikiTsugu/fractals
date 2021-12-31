@@ -1,22 +1,25 @@
 package src.sets;
 
 import src.builders.Complexe;
+import src.functions.Function;
+import src.functions.Polynom;
+import src.functions.Trigonometry;
 
 import java.util.Locale;
 import java.util.Scanner;
 
 public class Mandelbrot extends fractalSet{
-    private final double[] polynom;
+    private final Function type;
     private Complexe c;
 
     public Mandelbrot(){
         super();
-        polynom = buildPolynom();
-        this.c = new Complexe(0,0);
+        type = requestType();
     }
 
-    public double[] getPolynom() {
-        return polynom;
+    @Override
+    public Function getType() {
+        return type;
     }
 
     public Complexe getC() {
@@ -27,15 +30,14 @@ public class Mandelbrot extends fractalSet{
         this.c = c;
     }
 
-    //Création d'un polynôme complexe en demandant à l'utilisateur son degré
-    public double[] buildPolynom(){
-        Scanner sc = new Scanner(System.in).useLocale(Locale.US);
-        System.out.println("Enter degre of polynom (format : x) :");
-        int degre = sc.nextInt();
-        return new double[]{degre};
-    }
-
     public String toString(){
-        return "f(z) = z^" + (int)polynom[0] + " + c  with  z0 = 0";
+        String res = "";
+        if (type instanceof Polynom){
+            res = type + " + c" + "  with  z0 = 0";
+        }
+        if (type instanceof Trigonometry){
+            res = "c * " + type + "  with  z0 = 0";
+        }
+        return "f(z) = "+res;
     }
 }
