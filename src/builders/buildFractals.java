@@ -22,9 +22,24 @@ public class buildFractals {
     private int rgb;
     private int scale;
     private float hue;
+    private boolean term;
 
     public buildFractals(fractalSet f){
         set = f;
+        term = true;
+    }
+
+    public buildFractals(fractalSet f, boolean b){
+        set = f;
+        term = b;
+    }
+
+    public void setScale(int scale) {
+        this.scale = scale;
+    }
+
+    public void setHue(float hue) {
+        this.hue = hue;
     }
 
     //calcule le terme suivant de la suite complexe
@@ -108,7 +123,9 @@ public class buildFractals {
 
     //création du fichier Fractal.png (ou Fractalx.png avec x un nombre si le fichier existe déjà)
     public void generateFile(){
-        requestSettings();
+        if(term) {
+            requestSettings();
+        }
         BufferedImage img = buildPicture();
         displayFunction(img);
         int id = 0;

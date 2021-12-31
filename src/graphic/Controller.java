@@ -1,5 +1,6 @@
 package src.graphic;
 
+import src.builders.buildFractals;
 import src.functions.Function;
 import src.functions.Polynom;
 import src.functions.Trigonometry;
@@ -164,6 +165,36 @@ public class Controller {
     }
 
     public void activateFinalSettings(){
+        model.getHueVal().addActionListener(e -> {
+            try {
+                float val = Float.parseFloat(model.getHueVal().getText());
+                model.setHue(val);
+                model.getHueVal().setText("Value set to " + val);
+                model.getHueVal().setEditable(false);
+            } catch (NumberFormatException ex) {
+                model.getHueVal().setText("Invalid value");
+            }
+        });
+        model.getSizeVal().addActionListener(e -> {
+            try {
+                int val = Integer.parseInt(model.getSizeVal().getText());
+                model.setSize(val);
+                model.getSizeVal().setText("Value set to " + val);
+                model.getSizeVal().setEditable(false);
+                if(model.getHue()!=-1){
+                    model.getDownload().setEnabled(true);
+                }
+            } catch (NumberFormatException ex) {
+                model.getSizeVal().setText("Invalid value");
+            }
+        });
+        model.getDownload().addActionListener((event)->{
+            buildFractals f = new buildFractals(model.getSet(), false);
+            f.setHue(model.getHue());
+            f.setScale(model.getSizeFrac());
+            f.generateFile();
+            model.getDownload().setEnabled(false);
+        });
         model.getBack().addActionListener((event)->{
             model.removeAll();
             getModelFormat(model.getId());

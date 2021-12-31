@@ -14,14 +14,27 @@ public class Model extends JPanel {
     private JButton julia,mandelbrot,quit,polynom,trigonometry,back,next,download,view;
     private JTextField degre,type,cRe,cIm,hueVal,sizeVal;
     private Function typeF;
-    private int polyInfo,id,size;
-    private String trigoInfo,hue;
+    private int polyInfo,id,size=-1;
+    private String trigoInfo;
+    private float hue = -1;
     private double[] constInfo = {0,0};
     private fractalSet set;
 
     public Model(){
         setBackground(Color.black);
         mainMenu();
+    }
+
+    public fractalSet getSet() {
+        return set;
+    }
+
+    public JButton getDownload() {
+        return download;
+    }
+
+    public JButton getView() {
+        return view;
     }
 
     public JTextField getHueVal() {
@@ -48,11 +61,11 @@ public class Model extends JPanel {
         this.size = size;
     }
 
-    public String getHue() {
+    public float getHue() {
         return hue;
     }
 
-    public void setHue(String hue) {
+    public void setHue(float hue) {
         this.hue = hue;
     }
 
@@ -307,6 +320,7 @@ public class Model extends JPanel {
         add(sizeVal);
         download = new JButton("Download");
         download.setBorder(new EmptyBorder(10,20,10,20));
+        download.setEnabled(false);
         add(download);
         back.setBorder(new EmptyBorder(10,20,10,20));
         add(back);
