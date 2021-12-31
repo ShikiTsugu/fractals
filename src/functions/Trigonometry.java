@@ -1,8 +1,8 @@
 package src.functions;
 
 import src.builders.Complexe;
+import src.graphic.Model;
 
-import java.util.Locale;
 import java.util.Scanner;
 
 public class Trigonometry extends Function{
@@ -10,10 +10,19 @@ public class Trigonometry extends Function{
         super();
     }
 
+    public Trigonometry(Model m){
+        super(m);
+    }
+
+    @Override
+    public Object fetchArg(Model m) {
+        return m.getTrigoInfo();
+    }
+
     @Override
     public Object requestArg() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter which function you wish to use from cos(C), sin(S) and tan(T) :");
+        System.out.println("Enter which function you wish to use from C(cos), S(sin) and T(tan) :");
         String arg = sc.nextLine();
         if(!arg.equals("C")&&!arg.equals("S")&&!arg.equals("T")){
             System.out.println("C, S or T expected, you wrote "+arg);

@@ -1,6 +1,7 @@
 package src.functions;
 
 import src.builders.Complexe;
+import src.graphic.Model;
 
 import java.util.Locale;
 import java.util.Scanner;
@@ -8,6 +9,15 @@ import java.util.Scanner;
 public class Polynom extends Function{
     public Polynom(){
         super();
+    }
+
+    public Polynom(Model m){
+        super(m);
+    }
+
+    @Override
+    public Object fetchArg(Model m) {
+        return m.getPolyInfo();
     }
 
     @Override

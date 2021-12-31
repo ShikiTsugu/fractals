@@ -6,6 +6,7 @@ import src.sets.Julia;
 import src.sets.Mandelbrot;
 import src.sets.fractalSet;
 
+import javax.swing.*;
 import java.util.Scanner;
 
 public class Main {
@@ -29,8 +30,7 @@ public class Main {
     }
 
     public void initiateGraphic(){
-        View vue = new View();
-        vue.setVisible(true);
+        SwingUtilities.invokeLater(() -> new View());
     }
 
     public void chooseVersion(){

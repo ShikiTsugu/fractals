@@ -1,6 +1,7 @@
 package src.functions;
 
 import src.builders.Complexe;
+import src.graphic.Model;
 
 public abstract class Function<E> {
     private final E argument;
@@ -9,9 +10,15 @@ public abstract class Function<E> {
         argument = requestArg();
     }
 
+    public Function(Model m){
+        argument = fetchArg(m);
+    }
+
     public E getArgument() {
         return argument;
     }
+
+    public abstract E fetchArg(Model m);
 
     public abstract E requestArg();
 

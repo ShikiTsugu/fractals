@@ -4,6 +4,7 @@ import src.builders.Complexe;
 import src.functions.Function;
 import src.functions.Polynom;
 import src.functions.Trigonometry;
+import src.graphic.Controller;
 
 import java.util.Locale;
 import java.util.Scanner;
@@ -16,6 +17,12 @@ public class Julia extends fractalSet{
         super();
         type = requestType();
         c = requestConstant();
+    }
+
+    public Julia(Controller c){
+        super();
+        type = c.generateFunction();
+        this.c = new Complexe(c.getModel().getConstInfo()[0],c.getModel().getConstInfo()[1]);
     }
 
     @Override
