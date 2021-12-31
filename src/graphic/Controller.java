@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 
 public class Controller {
     private Model model;
+    private buildFractals f = null;
 
     public Controller(Model m){
         model = m;
@@ -17,6 +18,10 @@ public class Controller {
 
     public Model getModel() {
         return model;
+    }
+
+    public buildFractals getF() {
+        return f;
     }
 
     public void activateMainButtons(){
@@ -183,17 +188,23 @@ public class Controller {
                 model.getSizeVal().setEditable(false);
                 if(model.getHue()!=-1){
                     model.getDownload().setEnabled(true);
+                    f = new buildFractals(model.getSet(), false);
+                    f.setHue(model.getHue());
+                    f.setScale(model.getSizeFrac());
+                    model.getView().setEnabled(true);
                 }
             } catch (NumberFormatException ex) {
                 model.getSizeVal().setText("Invalid value");
             }
         });
         model.getDownload().addActionListener((event)->{
-            buildFractals f = new buildFractals(model.getSet(), false);
-            f.setHue(model.getHue());
-            f.setScale(model.getSizeFrac());
             f.generateFile();
             model.getDownload().setEnabled(false);
+        });
+        model.getView().addActionListener((event)->{
+            model.removeAll();
+            model.fractalViewer(this);
+            model.updateUI();
         });
         model.getBack().addActionListener((event)->{
             model.removeAll();

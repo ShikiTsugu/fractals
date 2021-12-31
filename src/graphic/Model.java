@@ -8,6 +8,7 @@ import src.sets.fractalSet;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Model extends JPanel {
     private JLabel title,f1,f2,f3,fct,hueDesc,sizeDesc;
@@ -19,8 +20,12 @@ public class Model extends JPanel {
     private float hue = -1;
     private double[] constInfo = {0,0};
     private fractalSet set;
+    private View v;
+    private JPanel container;
+    private BufferedImage img;
 
-    public Model(){
+    public Model(View v){
+        this.v = v;
         setBackground(Color.black);
         mainMenu();
     }
@@ -326,7 +331,26 @@ public class Model extends JPanel {
         add(back);
         view = new JButton("View");
         view.setBorder(new EmptyBorder(10,20,10,20));
+        view.setEnabled(false);
         add(view);
         c.activateFinalSettings();
+    }
+
+    public void fractalViewer(Controller c){
+        v.setSize(800,800);
+        v.setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
+        JLabel keys = new JLabel("Hold Z to zoom out, S to zoom in. Hold A to decrease hue, E to increase.");
+        keys.setFont(new Font("SansSerif", Font.BOLD, 20));
+        keys.setForeground(Color.WHITE);
+        add(keys, BorderLayout.NORTH);
+        img = c.getF().buildPicture();
+        ImageIcon ic = new ImageIcon(img);
+        JLabel fract = new JLabel(ic);
+        container = new JPanel();
+        container.setBackground(Color.black);
+        container.setLayout(new BorderLayout());
+        container.add(fract,BorderLayout.CENTER);
+        add(container, BorderLayout.CENTER);
     }
 }

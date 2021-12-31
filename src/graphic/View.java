@@ -7,7 +7,7 @@ public class View extends JFrame {
     private Controller control;
 
     public View(){
-        model = new Model();
+        model = new Model(this);
         control = new Controller(model);
         control.activateMainButtons();
         setContentPane(model);
