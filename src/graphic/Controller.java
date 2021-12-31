@@ -1,13 +1,10 @@
 package src.graphic;
 
-import src.builders.Complexe;
 import src.functions.Function;
 import src.functions.Polynom;
 import src.functions.Trigonometry;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Controller {
@@ -23,11 +20,13 @@ public class Controller {
 
     public void activateMainButtons(){
         model.getJulia().addActionListener((event)->{
+            model.getMandelbrot().setEnabled(false);
             model.removeAll();
             model.typeSelect(this);
             model.updateUI();
         });
         model.getMandelbrot().addActionListener((event)->{
+            model.getJulia().setEnabled(false);
             model.removeAll();
             model.typeSelect(this);
             model.updateUI();
@@ -55,18 +54,33 @@ public class Controller {
     }
 
     public void activateTypeButtons(){
-        model.getPolynom().addActionListener((event)->{
-            model.getTrigonometry().setEnabled(false);
-            model.removeAll();
-            model.juliaSettings(this);
-            model.updateUI();
-        });
-        model.getTrigonometry().addActionListener((event)->{
-            model.getPolynom().setEnabled(false);
-            model.removeAll();
-            model.juliaSettings(this);
-            model.updateUI();
-        });
+        if(!model.getMandelbrot().isEnabled()) {
+            model.getPolynom().addActionListener((event) -> {
+                model.getTrigonometry().setEnabled(false);
+                model.removeAll();
+                model.juliaSettings(this);
+                model.updateUI();
+            });
+            model.getTrigonometry().addActionListener((event) -> {
+                model.getPolynom().setEnabled(false);
+                model.removeAll();
+                model.juliaSettings(this);
+                model.updateUI();
+            });
+        }else if(!model.getJulia().isEnabled()){
+            model.getPolynom().addActionListener((event) -> {
+                model.getTrigonometry().setEnabled(false);
+                model.removeAll();
+                model.mandelbrotSettings(this);
+                model.updateUI();
+            });
+            model.getTrigonometry().addActionListener((event) -> {
+                model.getPolynom().setEnabled(false);
+                model.removeAll();
+                model.mandelbrotSettings(this);
+                model.updateUI();
+            });
+        }
         model.getBack().addActionListener((event)->{
             model.removeAll();
             getModelFormat(model.getId());
@@ -108,7 +122,7 @@ public class Controller {
         return f;
     }
 
-    public void activateJulia(){
+    public void activateSetSettings(){
         activatePolyOrTrigo();
         model.getcRe().addActionListener(e -> {
             try{
@@ -132,6 +146,9 @@ public class Controller {
         });
         model.getNext().addActionListener((event) -> {
             model.setTypeF(generateFunction());
+            model.removeAll();
+            model.finalChoices(this);
+            model.updateUI();
         });
     }
 }

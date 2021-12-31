@@ -1,20 +1,22 @@
 package src.graphic;
 
 import src.functions.Function;
+import src.sets.Julia;
+import src.sets.fractalSet;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class Model extends JPanel {
-    private JLabel title,f1,f2,f3;
+    private JLabel title,f1,f2,f3,fct;
     private JButton julia,mandelbrot,quit,polynom,trigonometry,back,next;
     private JTextField degre,type,cRe,cIm;
     private Function typeF;
-    private int polyInfo;
-    private String trigoInfo;
+    private int polyInfo,id,size;
+    private String trigoInfo,hue;
     private double[] constInfo = {0,0};
-    private int id;
+    private fractalSet set;
 
     public Model(){
         setBackground(Color.black);
@@ -103,7 +105,6 @@ public class Model extends JPanel {
 
     public void mainMenu(){
         id = 0;
-        System.out.println("is "+id);
         setLayout(new FlowLayout(FlowLayout.CENTER,20,50));
         //Titre
         title = new JLabel("Fractal Displayer");
@@ -126,7 +127,6 @@ public class Model extends JPanel {
 
     public void typeSelect(Controller c){
         id = 1;
-        System.out.println("is "+id);
         setLayout(new FlowLayout(FlowLayout.CENTER,20,50));
         //titre
         title.setText("Function Type");
@@ -154,25 +154,27 @@ public class Model extends JPanel {
         f1.setForeground(Color.WHITE);
         add(f1);
         add(degre);
-        cRe = new JTextField("Press Enter when done");
-        cRe.setBorder(new EmptyBorder(5,120,5,120));
-        f2 = new JLabel("Enter Real part of Constant");
-        f2.setFont(new Font("SansSerif", Font.BOLD, 15));
-        f2.setForeground(Color.WHITE);
-        add(f2);
-        add(cRe);
-        cIm = new JTextField("Press Enter when done");
-        cIm.setBorder(new EmptyBorder(5,120,5,120));
-        f3 = new JLabel("Enter Imaginary part of Constant");
-        f3.setFont(new Font("SansSerif", Font.BOLD, 15));
-        f3.setForeground(Color.WHITE);
-        add(f3);
-        add(cIm);
+        if(!mandelbrot.isEnabled()) {
+            cRe = new JTextField("Press Enter when done");
+            cRe.setBorder(new EmptyBorder(5, 120, 5, 120));
+            f2 = new JLabel("Enter Real part of Constant as Double");
+            f2.setFont(new Font("SansSerif", Font.BOLD, 15));
+            f2.setForeground(Color.WHITE);
+            add(f2);
+            add(cRe);
+            cIm = new JTextField("Press Enter when done");
+            cIm.setBorder(new EmptyBorder(5, 120, 5, 120));
+            f3 = new JLabel("Enter Imaginary part of Constant as Double");
+            f3.setFont(new Font("SansSerif", Font.BOLD, 15));
+            f3.setForeground(Color.WHITE);
+            add(f3);
+            add(cIm);
+        }
         add(back);
         next = new JButton("Next");
         next.setBorder(new EmptyBorder(10,40,10,40));
         add(next);
-        c.activateJulia();
+        c.activateSetSettings();
     }
 
     public void trigonometrySettings(Controller c){
@@ -183,30 +185,31 @@ public class Model extends JPanel {
         f1.setForeground(Color.WHITE);
         add(f1);
         add(type);
-        cRe = new JTextField("Press Enter when done");
-        cRe.setBorder(new EmptyBorder(5,120,5,120));
-        f2 = new JLabel("Enter Real part of Constant");
-        f2.setFont(new Font("SansSerif", Font.BOLD, 15));
-        f2.setForeground(Color.WHITE);
-        add(f2);
-        add(cRe);
-        cIm = new JTextField("Press Enter when done");
-        cIm.setBorder(new EmptyBorder(5,120,5,120));
-        f3 = new JLabel("Enter Imaginary part of Constant");
-        f3.setFont(new Font("SansSerif", Font.BOLD, 15));
-        f3.setForeground(Color.WHITE);
-        add(f3);
-        add(cIm);
+        if(!mandelbrot.isEnabled()) {
+            cRe = new JTextField("Press Enter when done");
+            cRe.setBorder(new EmptyBorder(5, 120, 5, 120));
+            f2 = new JLabel("Enter Real part of Constant as Double");
+            f2.setFont(new Font("SansSerif", Font.BOLD, 15));
+            f2.setForeground(Color.WHITE);
+            add(f2);
+            add(cRe);
+            cIm = new JTextField("Press Enter when done");
+            cIm.setBorder(new EmptyBorder(5, 120, 5, 120));
+            f3 = new JLabel("Enter Imaginary part of Constant as Double");
+            f3.setFont(new Font("SansSerif", Font.BOLD, 15));
+            f3.setForeground(Color.WHITE);
+            add(f3);
+            add(cIm);
+        }
         add(back);
         next = new JButton("Next");
         next.setBorder(new EmptyBorder(10,40,10,40));
         add(next);
-        c.activateJulia();
+        c.activateSetSettings();
     }
 
     public void juliaSettings(Controller c){
         id = 2;
-        System.out.println("is "+id);
         setLayout(new FlowLayout(FlowLayout.CENTER,50,10));
         //titre
         title.setText("Julia Set");
@@ -219,5 +222,38 @@ public class Model extends JPanel {
         if(!polynom.isEnabled()){
             trigonometrySettings(c);
         }
+    }
+
+    public void mandelbrotSettings(Controller c){
+        id = 2;
+        setLayout(new FlowLayout(FlowLayout.CENTER,50,10));
+        //titre
+        title.setText("Mandelbrot Set");
+        title.setBorder(new EmptyBorder(40,0,0,0));
+        add(title);
+        //options selon le type de la fonction
+        if(!trigonometry.isEnabled()){
+            polynomSettings(c);
+        }
+        if(!polynom.isEnabled()){
+            trigonometrySettings(c);
+        }
+    }
+
+    public void finalChoices(Controller c){
+        id = 3;
+        //titre
+        title.setText("Color and Size");
+        title.setBorder(new EmptyBorder(40,0,0,0));
+        add(title);
+        //fonction générée
+        if(!mandelbrot.isEnabled()){
+            set = new Julia(c);
+        }else if(!julia.isEnabled()){}
+        fct = new JLabel(set.toString());
+        fct.setFont(new Font("SansSerif", Font.BOLD, 20));
+        fct.setForeground(Color.WHITE);
+        fct.setBorder(new EmptyBorder(10,0,0,0));
+        add(fct);
     }
 }
