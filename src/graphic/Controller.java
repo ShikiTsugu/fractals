@@ -50,6 +50,15 @@ public class Controller {
             model.typeSelect(this);
             removeListeners(model.getBack());
             activateTypeButtons();
+        }else if (id == 3){
+            if(!model.getJulia().isEnabled()){
+                model.mandelbrotSettings(this);
+            }else if(!model.getMandelbrot().isEnabled()){
+                model.juliaSettings(this);
+                removeListeners(model.getBack());
+            }
+            removeListeners(model.getBack());
+            activateSetSettings();
         }
     }
 
@@ -124,30 +133,40 @@ public class Controller {
 
     public void activateSetSettings(){
         activatePolyOrTrigo();
-        model.getcRe().addActionListener(e -> {
-            try{
-                double val = Double.parseDouble(model.getcRe().getText());
-                model.setConstRE(val);
-                model.getcRe().setText("Value set to "+val);
-                model.getcRe().setEditable(false);
-            }catch (NumberFormatException ex){
-                model.getcRe().setText("Invalid value");
-            }
-        });
-        model.getcIm().addActionListener(e -> {
-            try{
-                double val = Double.parseDouble(model.getcIm().getText());
-                model.setConstIM(val);
-                model.getcIm().setText("Value set to "+val);
-                model.getcIm().setEditable(false);
-            }catch (NumberFormatException ex){
-                model.getcIm().setText("Invalid value");
-            }
-        });
+        if(!model.getMandelbrot().isEnabled()) {
+            model.getcRe().addActionListener(e -> {
+                try {
+                    double val = Double.parseDouble(model.getcRe().getText());
+                    model.setConstRE(val);
+                    model.getcRe().setText("Value set to " + val);
+                    model.getcRe().setEditable(false);
+                } catch (NumberFormatException ex) {
+                    model.getcRe().setText("Invalid value");
+                }
+            });
+            model.getcIm().addActionListener(e -> {
+                try {
+                    double val = Double.parseDouble(model.getcIm().getText());
+                    model.setConstIM(val);
+                    model.getcIm().setText("Value set to " + val);
+                    model.getcIm().setEditable(false);
+                } catch (NumberFormatException ex) {
+                    model.getcIm().setText("Invalid value");
+                }
+            });
+        }
         model.getNext().addActionListener((event) -> {
             model.setTypeF(generateFunction());
             model.removeAll();
             model.finalChoices(this);
+            model.updateUI();
+        });
+    }
+
+    public void activateFinalSettings(){
+        model.getBack().addActionListener((event)->{
+            model.removeAll();
+            getModelFormat(model.getId());
             model.updateUI();
         });
     }

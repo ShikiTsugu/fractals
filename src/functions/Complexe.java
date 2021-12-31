@@ -1,4 +1,4 @@
-package src.builders;
+package src.functions;
 
 public class Complexe {
     private final double reel,imaginaire;

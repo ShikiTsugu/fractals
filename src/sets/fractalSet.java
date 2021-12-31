@@ -1,11 +1,10 @@
 package src.sets;
 
-import src.builders.Complexe;
+import src.functions.Complexe;
 import src.functions.Function;
 import src.functions.Polynom;
 import src.functions.Trigonometry;
 
-import java.util.Locale;
 import java.util.Scanner;
 
 public abstract class fractalSet {

@@ -1,6 +1,6 @@
 package src.sets;
 
-import src.builders.Complexe;
+import src.functions.Complexe;
 import src.functions.Function;
 import src.functions.Polynom;
 import src.functions.Trigonometry;

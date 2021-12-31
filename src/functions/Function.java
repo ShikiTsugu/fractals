@@ -1,6 +1,5 @@
 package src.functions;
 
-import src.builders.Complexe;
 import src.graphic.Model;
 
 public abstract class Function<E> {

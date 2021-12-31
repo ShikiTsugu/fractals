@@ -2,6 +2,7 @@ package src.graphic;
 
 import src.functions.Function;
 import src.sets.Julia;
+import src.sets.Mandelbrot;
 import src.sets.fractalSet;
 
 import javax.swing.*;
@@ -9,9 +10,9 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class Model extends JPanel {
-    private JLabel title,f1,f2,f3,fct;
-    private JButton julia,mandelbrot,quit,polynom,trigonometry,back,next;
-    private JTextField degre,type,cRe,cIm;
+    private JLabel title,f1,f2,f3,fct,hueDesc,sizeDesc;
+    private JButton julia,mandelbrot,quit,polynom,trigonometry,back,next,download,view;
+    private JTextField degre,type,cRe,cIm,hueVal,sizeVal;
     private Function typeF;
     private int polyInfo,id,size;
     private String trigoInfo,hue;
@@ -21,6 +22,38 @@ public class Model extends JPanel {
     public Model(){
         setBackground(Color.black);
         mainMenu();
+    }
+
+    public JTextField getHueVal() {
+        return hueVal;
+    }
+
+    public void setHueVal(JTextField hueVal) {
+        this.hueVal = hueVal;
+    }
+
+    public JTextField getSizeVal() {
+        return sizeVal;
+    }
+
+    public void setSizeVal(JTextField sizeVal) {
+        this.sizeVal = sizeVal;
+    }
+
+    public int getSizeFrac() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public String getHue() {
+        return hue;
+    }
+
+    public void setHue(String hue) {
+        this.hue = hue;
     }
 
     public int getPolyInfo() {
@@ -249,11 +282,37 @@ public class Model extends JPanel {
         //fonction générée
         if(!mandelbrot.isEnabled()){
             set = new Julia(c);
-        }else if(!julia.isEnabled()){}
+        }else if(!julia.isEnabled()){
+            set = new Mandelbrot(c);
+        }
         fct = new JLabel(set.toString());
         fct.setFont(new Font("SansSerif", Font.BOLD, 20));
         fct.setForeground(Color.WHITE);
-        fct.setBorder(new EmptyBorder(10,0,0,0));
+        fct.setBorder(new EmptyBorder(0,0,10,0));
         add(fct);
+        //boutons et champs
+        hueVal = new JTextField("Press Enter when done");
+        hueVal.setBorder(new EmptyBorder(5,120,5,120));
+        hueDesc = new JLabel("Enter Hue value as float from 0.0 to 1.0");
+        hueDesc.setFont(new Font("SansSerif", Font.BOLD, 15));
+        hueDesc.setForeground(Color.WHITE);
+        add(hueDesc);
+        add(hueVal);
+        sizeVal = new JTextField("Press Enter when done");
+        sizeVal.setBorder(new EmptyBorder(5,120,5,120));
+        sizeDesc = new JLabel("Enter size value as Integer");
+        sizeDesc.setFont(new Font("SansSerif", Font.BOLD, 15));
+        sizeDesc.setForeground(Color.WHITE);
+        add(sizeDesc);
+        add(sizeVal);
+        download = new JButton("Download");
+        download.setBorder(new EmptyBorder(10,20,10,20));
+        add(download);
+        back.setBorder(new EmptyBorder(10,20,10,20));
+        add(back);
+        view = new JButton("View");
+        view.setBorder(new EmptyBorder(10,20,10,20));
+        add(view);
+        c.activateFinalSettings();
     }
 }

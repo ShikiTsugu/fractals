@@ -1,6 +1,5 @@
 package src.functions;
 
-import src.builders.Complexe;
 import src.graphic.Model;
 
 import java.util.Locale;
