@@ -1,6 +1,7 @@
 package src.run;
 
 import src.builders.buildFractals;
+import src.graphic.View;
 import src.sets.Julia;
 import src.sets.Mandelbrot;
 import src.sets.fractalSet;
@@ -8,7 +9,8 @@ import src.sets.fractalSet;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[]args){
+
+    public void initiateTerminal(){
         Scanner sc = new Scanner(System.in);
         System.out.println("What set do you want to use Julia (J) ? or Mandelbrot (M) ?");
         String rep = sc.nextLine();
@@ -24,5 +26,29 @@ public class Main {
         System.out.println(set);
         buildFractals f = new buildFractals(set);
         f.generateFile();
+    }
+
+    public void initiateGraphic(){
+        View vue = new View();
+        vue.setVisible(true);
+    }
+
+    public void chooseVersion(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Which version do you wish to use ? Terminal(T) or Graphic(G) ?");
+        String rep = sc.nextLine();
+        if(rep.equals("T")){
+            initiateTerminal();
+        }else if(rep.equals("G")){
+            initiateGraphic();
+        }else{
+            System.out.println("T or G expected, you wrote :"+rep);
+            System.exit(-1);
+        }
+    }
+
+    public static void main(String[]args){
+        Main launcher = new Main();
+        launcher.chooseVersion();
     }
 }

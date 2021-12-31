@@ -102,7 +102,6 @@ public class buildFractals {
     public BufferedImage buildPicture() {
         var img = new BufferedImage(3*scale, 3*scale, BufferedImage.TYPE_INT_RGB);
         color(img);
-        displayFunction(img);
         return img;
     }
 
@@ -110,6 +109,7 @@ public class buildFractals {
     public void generateFile(){
         requestSettings();
         BufferedImage img = buildPicture();
+        displayFunction(img);
         int id = 0;
         File f = new File("Fractal.png");
         while (f.exists()) {
