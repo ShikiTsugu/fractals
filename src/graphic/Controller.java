@@ -7,6 +7,8 @@ import src.functions.Trigonometry;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class Controller {
     private Model model;
@@ -61,10 +63,13 @@ public class Controller {
                 model.mandelbrotSettings(this);
             }else if(!model.getMandelbrot().isEnabled()){
                 model.juliaSettings(this);
-                removeListeners(model.getBack());
             }
             removeListeners(model.getBack());
             activateSetSettings();
+        }else if (id == 4){
+            model.mainMenu();
+            removeListeners(model.getBack());
+            activateMainButtons();
         }
     }
 
@@ -212,4 +217,59 @@ public class Controller {
             model.updateUI();
         });
     }
+
+    //classe interne prenant en compte les touches Z,S,A,E appuyées, effectue certaines opérations dans ces cas la
+    class keyMaps implements KeyListener {
+        private Controller c;
+        public keyMaps(Controller c){
+            this.c = c;
+        }
+        @Override
+        public void keyTyped(KeyEvent e) {
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            int key = e.getKeyCode();
+            if(key == KeyEvent.VK_Z){
+                model.removeAll();
+                f.setScale(f.getScale()+10);
+                model.fractalViewer(c);
+                model.updateUI();
+            }
+            if(key == KeyEvent.VK_S){
+                model.removeAll();
+                if(f.getScale()-10 >= 10) {
+                    f.setScale(f.getScale() - 10);
+                }
+                model.fractalViewer(c);
+                model.updateUI();
+            }
+            if(key == KeyEvent.VK_A){
+                model.removeAll();
+                if(f.getHue()+0.01f <= 1) {
+                    f.setHue(f.getHue() + 0.01f);
+                }else{
+                    f.setHue(0);
+                }
+                model.fractalViewer(c);
+                model.updateUI();
+            }
+            if(key == KeyEvent.VK_E){
+                model.removeAll();
+                if(f.getHue()-0.01f >= 0.01f) {
+                    f.setHue(f.getHue() - 0.01f);
+                }else{
+                    f.setHue(1);
+                }
+                model.fractalViewer(c);
+                model.updateUI();
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+        }
+    }
+
 }

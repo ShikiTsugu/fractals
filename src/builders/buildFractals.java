@@ -34,6 +34,14 @@ public class buildFractals {
         term = b;
     }
 
+    public int getScale() {
+        return scale;
+    }
+
+    public float getHue() {
+        return hue;
+    }
+
     public void setScale(int scale) {
         this.scale = scale;
     }

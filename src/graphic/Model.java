@@ -154,6 +154,7 @@ public class Model extends JPanel {
         this.typeF = typeF;
     }
 
+    //affiche le menu principal
     public void mainMenu(){
         id = 0;
         setLayout(new FlowLayout(FlowLayout.CENTER,20,50));
@@ -176,6 +177,7 @@ public class Model extends JPanel {
         add(quit);
     }
 
+    //affiche les options de sélection du type de fonction
     public void typeSelect(Controller c){
         id = 1;
         setLayout(new FlowLayout(FlowLayout.CENTER,20,50));
@@ -197,6 +199,7 @@ public class Model extends JPanel {
         c.activateTypeButtons();
     }
 
+    //affiche les options dans le cas d'une fonction polynomiale
     public void polynomSettings(Controller c){
         degre = new JTextField("Press Enter when done");
         degre.setBorder(new EmptyBorder(5,120,5,120));
@@ -228,6 +231,7 @@ public class Model extends JPanel {
         c.activateSetSettings();
     }
 
+    //affiche les options dans le cas d'une fonction trigonométrique
     public void trigonometrySettings(Controller c){
         type = new JTextField("Press Enter when done");
         type.setBorder(new EmptyBorder(5,120,5,120));
@@ -259,6 +263,7 @@ public class Model extends JPanel {
         c.activateSetSettings();
     }
 
+    //affiche les options pour le set julia
     public void juliaSettings(Controller c){
         id = 2;
         setLayout(new FlowLayout(FlowLayout.CENTER,50,10));
@@ -275,6 +280,7 @@ public class Model extends JPanel {
         }
     }
 
+    //affiche les options pour le set mandelbrot
     public void mandelbrotSettings(Controller c){
         id = 2;
         setLayout(new FlowLayout(FlowLayout.CENTER,50,10));
@@ -291,6 +297,7 @@ public class Model extends JPanel {
         }
     }
 
+    //affiche les choix finaux soit la taille de base et la teinte de base
     public void finalChoices(Controller c){
         id = 3;
         //titre
@@ -336,8 +343,11 @@ public class Model extends JPanel {
         c.activateFinalSettings();
     }
 
+    //Génère une nouvelle fenetre pour visualiser le fractale et changer sa taille/couleur en live
     public void fractalViewer(Controller c){
-        v.setSize(800,800);
+        Controller.keyMaps k = c.new keyMaps(c);
+        id = 4;
+        v.setSize(600,600);
         v.setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         JLabel keys = new JLabel("Hold Z to zoom out, S to zoom in. Hold A to decrease hue, E to increase.");
@@ -352,5 +362,9 @@ public class Model extends JPanel {
         container.setLayout(new BorderLayout());
         container.add(fract,BorderLayout.CENTER);
         add(container, BorderLayout.CENTER);
+        container.removeKeyListener(k);
+        container.addKeyListener(k);
+        container.setFocusable(true);
+        container.requestFocusInWindow();
     }
 }
